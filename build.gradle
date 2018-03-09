@@ -1,0 +1,99 @@
+apply plugin: 'eclipse'		// Apply eclipse plugin
+//apply plugin: 'discover'
+apply plugin: 'java'		// Apply the java plugin to add support for Java
+
+compileJava.options.encoding = "UTF-8"
+compileTestJava.options.encoding = "UTF-8"
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+
+//workaround to force eclipse to use UTF-8 encoding for project
+eclipseJdt.doLast {
+    File f = file('.settings/org.eclipse.core.resources.prefs')
+    f.write('eclipse.preferences.version=1\n')
+    f.append('encoding/<project>=UTF-8')
+}
+
+//workaround to force eclipse to use UTF-8 encoding for project
+eclipseJdt.doLast {
+  File f = file('.settings/org.eclipse.core.resources.prefs')
+    f.write('eclipse.preferences.version=1\n')
+    f.append('encoding/<project>=UTF-8')
+}
+
+
+version = '3.1'
+String nexusBaseURL = 'https://nexus.discoverfinancial.com:8443'
+
+repositories {
+    //mavenCentral()
+    maven {
+		url "http://repo1.maven.org/maven2"
+    }
+}
+
+/*
+* //To generate .bat and linux executables with all dependencies
+* apply plugin: 'application'
+* run {
+* 	mainClassName = "tests.TestSuite"
+* 	args += 'first_arg'	//command line arguments for main
+* 	args "arg1", "arg2"
+* }
+*/
+
+jar {
+	manifest {
+		attributes 'Implementation-Title': 'ebay Automation', 'Implementation-Version': version
+		//attributes 'Main-Class': 'Library'
+	}
+	from sourceSets.main.allSource	//add .java source files to the generated JAR file
+}
+
+//test { systemProperties 'property': 'value' }
+//main { systemProperties 'property': 'value' }
+
+
+dependencies {
+testCompile 'net.serenity-bdd:serenity-junit:1.2.4' 
+	testCompile 'net.serenity-bdd:serenity-cucumber:1.1.28'
+	testCompile "net.serenity-bdd:serenity-rest-assured:1.1.42"
+	testCompile "org.codehaus.groovy:groovy-all:2.4.7"
+	testCompile "org.assertj:assertj-core:3.6.2"
+	testCompile 'org.slf4j:slf4j-api:1.7.21'
+	testCompile 'org.slf4j:slf4j-simple:1.7.21'
+	testCompile 'org.ini4j:ini4j:0.5.4'
+	//testCompile 'com.experitest:imageClient:11.0'
+	//testCompile 'com.experitest:seetest-appium:10.8'
+	//testCompile 'com.experitest:SeeTestClient:10.4'
+	//testCompile 'com.experitest:Experitest:10.2'
+	testCompile 'org.apache.xmlrpc:xmlrpc-common:3.1.2'
+    testCompile 'org.apache.xmlrpc:xmlrpc-client:3.1.2'
+	 testCompile 'io.fastjson:boon:0.34'
+	 // compile 'com.discoverfinancial.esqm.tools:TdmClientApi:2.0.22-20170818.105830-1'
+	 compile 'com.fasterxml.jackson.core:jackson-core:2.2.3'
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.7.1-1'
+    compile 'io.rest-assured:rest-assured:3.0.1'
+	//compile 'io.appium:java-client:6.0.0-BETA4'
+	testCompile fileTree(dir: 'libs', include: '*.jar')}
+
+
+
+task listJars << {
+    configurations.compile.each { File file -> println file.name }
+}
+
+task cleanReport << {
+	delete 'report'
+}
+
+task wrapper(type: Wrapper) {
+	gradleVersion = '2.12'
+	distributionUrl = nexusBaseURL + '/content/groups/public/org/gradle/gradle/2.9/gradle-2.12-all.zip'
+}
+
+
+
+
