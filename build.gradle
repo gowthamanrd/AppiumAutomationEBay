@@ -1,5 +1,4 @@
 apply plugin: 'eclipse'		// Apply eclipse plugin
-//apply plugin: 'discover'
 apply plugin: 'java'		// Apply the java plugin to add support for Java
 
 compileJava.options.encoding = "UTF-8"
@@ -25,8 +24,6 @@ eclipseJdt.doLast {
 
 
 version = '3.1'
-String nexusBaseURL = 'https://nexus.discoverfinancial.com:8443'
-
 repositories {
     //mavenCentral()
     maven {
@@ -89,10 +86,6 @@ task cleanReport << {
 	delete 'report'
 }
 
-task wrapper(type: Wrapper) {
-	gradleVersion = '2.12'
-	distributionUrl = nexusBaseURL + '/content/groups/public/org/gradle/gradle/2.9/gradle-2.12-all.zip'
-}
 
 
 
