@@ -1,4 +1,4 @@
-package com.dfs.common.pages;
+package com.common.pages;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -7,10 +7,15 @@ import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.Dimension;
+import org.openqa.selenium.ScreenOrientation;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.touch.TouchActions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
+
+import com.framework.MobilePageObject;
+
 import groovy.util.logging.Log;
 import io.appium.java_client.TouchAction;
 import io.appium.java_client.android.AndroidDriver;
@@ -20,7 +25,8 @@ import net.thucydides.core.util.EnvironmentVariables;
 import net.thucydides.core.util.SystemEnvironmentVariables;
 import net.thucydides.core.webdriver.WebDriverFacade;
 
-public class EbayPage extends com.dfs.framework.MobilePageObject{
+public class EbayPage extends MobilePageObject{
+	
 	public static EnvironmentVariables variables= SystemEnvironmentVariables.createEnvironmentVariables();
 	public static WebDriver driver=null;
 
@@ -56,7 +62,7 @@ public class EbayPage extends com.dfs.framework.MobilePageObject{
 	 **/
 	@Step("Validate eBay landing page is displayed")
 	public void verifyHomePageDisplayed()
-	{
+	{		
 		// ByPass Next Time save your self page if displayed 
 		if(mobileElementByXpath(lblNextTimeSaveYourself).isVisible())
 		{
@@ -163,6 +169,10 @@ public class EbayPage extends com.dfs.framework.MobilePageObject{
 	@Step("Search for Product Category")
 	public void searchProductCategory(String category) throws InterruptedException
 	{
+		//Set device to landscape mode
+		if (getOrientation().equalsIgnoreCase("portrait")) {
+			SetLandscapeOrientation();
+		}
 		//user enters a required category
 		mobileElementByXpath(txtSearchForAnything).waitUntilVisible();
 		mobileElementByXpath(txtSearchForAnything).sendKeys(category);
@@ -181,6 +191,11 @@ public class EbayPage extends com.dfs.framework.MobilePageObject{
 	@Step("Verify product list page is displayed")
 	public void verifyProductListPgDisplayed()
 	{
+		//Set device to Portrait mode
+		if (getOrientation().equalsIgnoreCase("landscape")) {
+			SetPortraitOrientation();
+		}
+		//Verify product list is displayed
 		mobileElementByXpath(lnkSort).waitUntilVisible();
 		Assert.assertTrue("Verify list of products page is displayed as expected", mobileElementByXpath(lnkSort).isVisible());
 	}
@@ -293,8 +308,48 @@ public class EbayPage extends com.dfs.framework.MobilePageObject{
 		isElementVisible = mobileElementByXpath(mobileElementToFind).isVisible();
 		while (!isElementVisible) {
 			((AndroidDriver<?>) proxiedDriver).swipe(startx,starty,startx, endy, 1000);
-			isElementVisible = mobileElementByXpath(mobileElementToFind).isVisible();
+			isElementVisible = mobileElementByXpath(mobileElementToFind).isVisible();	
 		}
 	}
 	
+	/**
+	 * <br>
+	 * <b>Description</b> Get screen orientation
+	 * @author Krishnamoorthy
+	 **/
+	@Step("Get screen orientation")
+	public String getOrientation()
+	{
+		WebDriver proxiedDriver = ((WebDriverFacade) getDriver()).getProxiedDriver();
+		ScreenOrientation orientation= ((AndroidDriver<?>) proxiedDriver).getOrientation();
+		String currentScreenOrientation= orientation.value();
+		return currentScreenOrientation;
+	}
+	
+	/**
+	 * <br>
+	 * <b>Description</b> Set device to portrait mode
+	 * @author Krishnamoorthy
+	 **/
+	@Step("Set device to portrait mode")
+	public void SetPortraitOrientation()
+	{
+		WebDriver proxiedDriver = ((WebDriverFacade) getDriver()).getProxiedDriver();
+		((AndroidDriver<?>) proxiedDriver).rotate(ScreenOrientation.PORTRAIT);
+		Assert.assertTrue("Device orientation is set to Portrait",true);
+	}
+	
+	/**
+	 * <br>
+	 * <b>Description</b> Set device to Landscape mode
+	 * @author Krishnamoorthy
+	 **/
+	@Step("Set device to Landscape mode")
+	public void SetLandscapeOrientation()
+	{
+		WebDriver proxiedDriver = ((WebDriverFacade) getDriver()).getProxiedDriver();
+		((AndroidDriver<?>) proxiedDriver).rotate(ScreenOrientation.LANDSCAPE);
+		Assert.assertTrue("Device orientation is set to Landscape",true);
+	}
 }
+    

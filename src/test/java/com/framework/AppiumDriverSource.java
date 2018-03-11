@@ -1,4 +1,4 @@
-package com.dfs.framework;
+package com.framework;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -28,7 +28,6 @@ public class AppiumDriverSource implements DriverSource {
 		if (getOS().equals("ios")) {
 			capabilities.setCapability(IOSMobileCapabilityType.BUNDLE_ID, variables.getProperty("appActivity",""));
 			return new IOSDriver<>(getServerURL(), capabilities);
-
 		}
 		if (getOS().equals("android")) {
 			capabilities.setCapability(AndroidMobileCapabilityType.APP_PACKAGE, variables.getProperty("appPackage",""));

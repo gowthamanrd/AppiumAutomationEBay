@@ -1,4 +1,4 @@
-package com.dfs.framework;
+package com.framework;
 
 import net.serenitybdd.core.pages.WebElementFacade;
 

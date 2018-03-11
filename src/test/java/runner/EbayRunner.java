@@ -9,10 +9,11 @@ package runner;
 	@CucumberOptions(
 			features={"src/test/resources/common/features/Order_Product_ebay.feature"},
 			tags={"@ebay_ShoppingEndtoEndFlowValidation"},
-			glue = { "com.dfs.steps" },
+			glue = { "com.steps" },
 			plugin = { "pretty", "html:cucumberReport/cucumber-html-report", "json:cucumberReport/cucumber-report.json" }, 
 	        monochrome=true)
 	public class EbayRunner {
 	}
 
 
+ 

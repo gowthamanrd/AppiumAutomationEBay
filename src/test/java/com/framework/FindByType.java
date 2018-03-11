@@ -1,4 +1,4 @@
-package com.dfs.framework;
+package com.framework;
 
 public enum FindByType {
     BY_ID,

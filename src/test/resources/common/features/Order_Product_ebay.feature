@@ -23,4 +23,4 @@ When user taps on 'Proceed to Pay' button
 Then 'Choose your payment method' should be displayed
 Examples:
 |UserName                     |Password  |UserID                  |CategoryName    |ItemName                                                   |     
-|krishnamoorthy.vedi@gmail.com|9790638420|krishnamoorthvediyappa_0|management books|Lan Traffic Management (Hewlett-Packard Professional Books)| 
+|krishnamoorthy.vedi@gmail.com|**********|krishnamoorthvediyappa_0|management books|Lan Traffic Management (Hewlett-Packard Professional Books)| 
