@@ -1,7 +1,5 @@
 package com.framework;
 
-import net.serenitybdd.core.pages.WebElementFacade;
-
 public interface MobileElementFacade {
     public void click();
     public void sendKeys(CharSequence... keysToSend);

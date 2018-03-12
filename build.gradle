@@ -70,8 +70,6 @@ testCompile 'net.serenity-bdd:serenity-junit:1.2.4'
     compile 'io.rest-assured:rest-assured:3.0.1'
 	testCompile fileTree(dir: 'libs', include: '*.jar')}
 
-
-
 task listJars << {
     configurations.compile.each { File file -> println file.name }
 }

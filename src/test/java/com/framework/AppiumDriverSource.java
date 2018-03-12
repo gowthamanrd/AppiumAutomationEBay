@@ -37,12 +37,6 @@ public class AppiumDriverSource implements DriverSource {
 		throw new RuntimeException("Could not create AppiumDriver, check properties file for OS settings");
 	}
 
-	private Object SerenitySystemProperties() {
-
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	@Override
 	public boolean takesScreenshots() {
 		return true;

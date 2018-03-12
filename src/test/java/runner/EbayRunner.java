@@ -7,7 +7,7 @@ package runner;
 
 	@RunWith(CucumberWithSerenity.class)
 	@CucumberOptions(
-			features={"src/test/resources/common/features/Order_Product_ebay.feature"},
+			features={"src/test/resources/features/Order_Product_ebay.feature"},
 			tags={"@ebay_ShoppingEndtoEndFlowValidation"},
 			glue = { "com.steps" },
 			plugin = { "pretty", "html:cucumberReport/cucumber-html-report", "json:cucumberReport/cucumber-report.json" }, 
